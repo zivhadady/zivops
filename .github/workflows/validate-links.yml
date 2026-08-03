@@ -1,0 +1,34 @@
+name: CI - Validate Links
+
+on:
+  push:
+    paths:
+      - '**/*.html'
+      - '**/*.py'
+      - '_config.yml'
+  pull_request:
+    paths:
+      - '**/*.html'
+      - '**/*.py'
+      - '_config.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Run validate_links.py on built site
+        run: python validate_links.py ./_site
