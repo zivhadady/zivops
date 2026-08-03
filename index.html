@@ -1,22 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevOps Portfolio</title>
+    <title>Ziv | DevOps & Cloud Architect</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Alex - Senior DevOps Engineer</h1>
-        <p>Building reliable infrastructure & seamless CI/CD pipelines.</p>
-    </header>
+    <div class="background-grid"></div>
+    
+    <nav class="glass-nav">
+        <div class="logo">
+            <i class="fas fa-terminal"></i> ZivOps
+        </div>
+        <div class="nav-links">
+            <a href="#about">אודות</a>
+            <a href="#skills">טכנולוגיות</a>
+            <a href="#projects">פרויקטים ו-IaC</a>
+        </div>
+        <div class="system-status">
+            <span class="pulse"></span> System: 100% Uptime
+        </div>
+    </nav>
+
     <main>
-        <section>
-            <h2>Infrastructure as Code</h2>
-            <p>Check out my Terraform configurations for provisioning highly available architecture.</p>
-            <a href="terraform/" class="btn">View Terraform Code</a>
+        <section class="hero" id="about">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="Cloud & DevOps Architect">Cloud & DevOps Architect</h1>
+                <p class="subtitle">בניית תשתיות ענן, אוטומציה, ואבטחת CI/CD מקצה לקצה.</p>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="title">ziv@cloud-infra:~</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt">$</span> terraform apply -auto-approve</p>
+                        <p class="output success">Apply complete! Resources: 42 added, 0 changed, 0 destroyed.</p>
+                        <p><span class="prompt">$</span> kubectl get nodes</p>
+                        <p class="output">Ready    worker-1   v1.28.0</p>
+                        <p class="output">Ready    worker-2   v1.28.0</p>
+                        <p><span class="prompt cursor">_</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills" id="skills">
+            <h2 class="section-title"><i class="fas fa-layer-group"></i> Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fab fa-aws"></i>
+                    <span>AWS / Cloud</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-dharmachakra"></i>
+                    <span>Kubernetes</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-code-branch"></i>
+                    <span>CI/CD & GitOps</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>DevSecOps</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Observability</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-python"></i>
+                    <span>Python & Bash</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <h2 class="section-title"><i class="fas fa-network-wired"></i> Infrastructure as Code</h2>
+            <div class="glass-card">
+                <h3><i class="fas fa-cloud"></i> S3 Static Website Architecture</h3>
+                <p>קוד ה-Terraform המנהל את תשתית האתר הזה, כולל הגדרות אבטחה וניהול גישה.</p>
+                <div class="tech-tags">
+                    <span>Terraform</span>
+                    <span>AWS S3</span>
+                    <span>IAM</span>
+                </div>
+                <a href="terraform/" class="cyber-btn">
+                    <span>View Terraform Source</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
         </section>
     </main>
+
+    <footer>
+        <p>&copy; 2026 Ziv | Automated with Terraform & GitHub Actions.</p>
+    </footer>
 </body>
 </html>
