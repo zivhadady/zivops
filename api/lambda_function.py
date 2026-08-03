@@ -1,4 +1,5 @@
 import json
+import os
 
 def lambda_handler(event, context):
     # Default company name
@@ -19,8 +20,8 @@ def lambda_handler(event, context):
     # Personalized greeting
     message = f"Hello {company_name}! Ready to optimize your DevOps infrastructure?"
     
-    # Your Google Calendar appointment scheduling link
-    calendar_link = "https://calendar.google.com/calendar/u/0/appointments/schedules/your-unique-booking-link"
+    # Securely retrieve the calendar link from environment variables
+    calendar_link = os.environ.get('CALENDAR_LINK', 'Link not configured.')
 
     return {
         'statusCode': 200,

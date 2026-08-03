@@ -26,4 +26,5 @@ def check_html_links(directory):
         print("All local links are valid!")
 
 if __name__ == "__main__":
-    check_html_links('.')
+    dir_to_check = sys.argv[1] if len(sys.argv) > 1 else '.'
+    check_html_links(dir_to_check)

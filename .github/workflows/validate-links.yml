@@ -1,0 +1,29 @@
+name: CI - Validate Links
+
+on:
+  workflow_run:
+    workflows: ["CD - Deploy to GitHub Pages"]
+    types:
+      - completed
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Run validate_links.py on built site
+        run: python validate_links.py ./_site

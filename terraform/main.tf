@@ -1,3 +1,9 @@
+variable "calendar_link" {
+  description = "The Google Calendar booking link"
+  type        = string
+  sensitive   = true
+}
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -74,6 +80,12 @@ resource "aws_lambda_function" "api_backend" {
   handler          = "lambda_function.lambda_handler"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   runtime          = "python3.9"
+
+  environment {
+    variables = {
+      CALENDAR_LINK = var.calendar_link
+    }
+  }
 }
 
 resource "aws_lambda_function_url" "api_url" {

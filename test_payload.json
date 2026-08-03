@@ -1,0 +1,7 @@
+{
+  "company": "Acme Corp",
+  "contact_name": "Wile E. Coyote",
+  "email": "wile.e@acmecorp.com",
+  "inquiry_type": "DevOps Consulting",
+  "message": "We need help migrating our monolith to Kubernetes and setting up a CI/CD pipeline."
+}
