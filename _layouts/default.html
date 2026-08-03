@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background-grid"></div>
+    
+    <nav class="glass-nav">
+        <div class="logo">
+            <i class="fas fa-terminal"></i> {{ site.title }}
+        </div>
+        <div class="nav-links">
+            <a href="#about">אודות</a>
+            <a href="#skills">טכנולוגיות</a>
+            <a href="#projects">פרויקטים ו-IaC</a>
+        </div>
+        <div class="system-status">
+            <span class="pulse"></span> System: 100% Uptime
+        </div>
+    </nav>
+
+    <main>
+        {{ content }}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 {{ site.author }} | {{ site.description }}</p>
+    </footer>
+</body>
+</html>
