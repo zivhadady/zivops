@@ -14,7 +14,7 @@ Since this is a continuously deployed DevOps portfolio and Serverless API, we cu
 Security is a top priority for our DevSecOps infrastructure. If you discover a vulnerability in the Terraform code, Serverless Lambda API, or CI/CD pipelines, please follow these steps:
 
 1. **Do not open a public issue.** This ensures that malicious actors cannot exploit the vulnerability before we can patch it.
-2. Email your findings directly to `security@yourdomain.com` (replace with your actual email).
+2. Email your findings directly to `[EMAIL_ADDRESS]`
 3. Please include the following in your report:
    - A detailed description of the vulnerability.
    - Steps to reproduce the issue.
