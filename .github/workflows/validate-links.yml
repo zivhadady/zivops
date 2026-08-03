@@ -1,20 +1,15 @@
 name: CI - Validate Links
 
 on:
-  push:
-    paths:
-      - '**/*.html'
-      - '**/*.py'
-      - '_config.yml'
-  pull_request:
-    paths:
-      - '**/*.html'
-      - '**/*.py'
-      - '_config.yml'
+  workflow_run:
+    workflows: ["CD - Deploy to GitHub Pages"]
+    types:
+      - completed
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
