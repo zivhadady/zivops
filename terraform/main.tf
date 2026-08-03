@@ -1,3 +1,9 @@
+variable "calendar_link" {
+  description = "The Google Calendar booking link"
+  type        = string
+  sensitive   = true
+}
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -77,7 +83,7 @@ resource "aws_lambda_function" "api_backend" {
 
   environment {
     variables = {
-      CALENDAR_LINK = "https://calendar.google.com/calendar/u/0/appointments/schedules/your-unique-booking-link"
+      CALENDAR_LINK = var.calendar_link
     }
   }
 }
