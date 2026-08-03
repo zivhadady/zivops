@@ -74,6 +74,12 @@ resource "aws_lambda_function" "api_backend" {
   handler          = "lambda_function.lambda_handler"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   runtime          = "python3.9"
+
+  environment {
+    variables = {
+      CALENDAR_LINK = "https://calendar.google.com/calendar/u/0/appointments/schedules/your-unique-booking-link"
+    }
+  }
 }
 
 resource "aws_lambda_function_url" "api_url" {
