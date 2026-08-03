@@ -7,23 +7,20 @@ on:
   pull_request:
 
 jobs:
-  ci-html-lint:
-    name: CI - Lint HTML
+  ci-python-validator:
+    name: CI - Validate Links
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '18'
+          python-version: '3.9'
 
-      - name: Install HTMLHint
-        run: npm install -g htmlhint
-
-      - name: Run HTMLHint
-        run: htmlhint "**/*.html"
+      - name: Run validate_links.py
+        run: python validate_links.py
 
   ai-code-review:
     name: AI PR Reviewer
@@ -46,7 +43,7 @@ jobs:
   cd-deploy-pages:
     name: CD - Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    needs: ci-html-lint
+    needs: ci-python-validator
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
