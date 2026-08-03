@@ -19,8 +19,14 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Run validate_links.py
-        run: python validate_links.py
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Run validate_links.py on built site
+        run: python validate_links.py ./_site
 
   ai-code-review:
     name: AI PR Reviewer

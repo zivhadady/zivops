@@ -12,8 +12,7 @@ def check_html_links(directory):
             # Find simple href links
             links = re.findall(r'href="([^"]+)"', content)
             for link in links:
-                # Ignore external links, anchors, and Jekyll Liquid tags
-                if link.startswith('http') or link.startswith('#') or '{{' in link:
+                if link.startswith('http') or link.startswith('#'):
                     continue
                 # Local link check
                 target_path = os.path.join(os.path.dirname(html_file), link.strip('/'))
@@ -27,4 +26,5 @@ def check_html_links(directory):
         print("All local links are valid!")
 
 if __name__ == "__main__":
-    check_html_links('.')
+    dir_to_check = sys.argv[1] if len(sys.argv) > 1 else '.'
+    check_html_links(dir_to_check)
