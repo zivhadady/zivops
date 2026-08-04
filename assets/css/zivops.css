@@ -323,10 +323,12 @@ h1.glitch {
 
 .tech-tags {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.8rem;
     margin-bottom: 2rem;
     position: relative;
 }
+
 
 .tech-tags span {
     background: rgba(88, 166, 255, 0.1);
@@ -464,4 +466,117 @@ footer {
     margin-top: 4rem;
     font-family: 'Fira Code', monospace;
     font-size: 0.9rem;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+    h1.glitch {
+        font-size: 3rem;
+    }
+    
+    .glass-card {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .glass-nav {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 0.8rem 1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .nav-links a {
+        margin: 0 0.4rem;
+        font-size: 0.95rem;
+    }
+
+    .system-status {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    main {
+        padding-top: 130px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h1.glitch {
+        font-size: 2.2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.8rem;
+    }
+
+    .terminal-body {
+        font-size: 0.85rem;
+        height: 250px;
+        padding: 1rem;
+    }
+
+    .experience {
+        padding: 2rem 0;
+    }
+
+    .experience-card {
+        padding: 1.5rem;
+    }
+
+    .experience-card .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .experience-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .experience-card .company-name {
+        font-size: 1rem;
+    }
+
+    .projects {
+        padding: 2rem 0;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1.glitch {
+        font-size: 1.8rem;
+    }
+
+    .summary-text {
+        font-size: 0.95rem;
+    }
+
+    .cyber-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
