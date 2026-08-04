@@ -12,8 +12,13 @@
 <body>
     <div class="background-grid"></div>
     <nav class="glass-nav">
-        <div class="logo">
-            <i class="fas fa-terminal"></i> {{ site.title }}
+        <div class="nav-brand">
+            <div class="logo">
+                <i class="fas fa-terminal"></i> {{ site.title }}
+            </div>
+            <div class="system-status">
+                <span class="pulse"></span> System: 100% Uptime
+            </div>
         </div>
         <div class="nav-links">
             <a href="#about">About</a>
@@ -21,10 +26,8 @@
             <a href="#experience">Experience</a>
             <a href="#projects">Projects & IaC</a>
         </div>
-        <div class="system-status">
-            <span class="pulse"></span> System: 100% Uptime
-        </div>
     </nav>
+
 
     <main>
         {{ content }}
