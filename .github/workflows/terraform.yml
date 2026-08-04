@@ -1,0 +1,38 @@
+name: IaC - Terraform Lambda Check
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'api/**'
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'api/**'
+
+jobs:
+  terraform:
+    name: Terraform Check & Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup HashiCorp Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./api/terraform
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+        working-directory: ./api/terraform
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./api/terraform

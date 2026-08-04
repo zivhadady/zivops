@@ -1,0 +1,6 @@
+# Example Terraform variables file for Python API Lambda deployment
+aws_region           = "us-east-1"
+s3_bucket_prefix     = "ziv-devops-portfolio-bucket"
+lambda_function_name = "devops_portfolio_api"
+iam_role_name        = "serverless_lambda_exec_role"
+calendar_link        = "https://calendar.google.com/calendar/appointments/schedules/your-schedule-id"
