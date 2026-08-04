@@ -2,7 +2,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-# --- S3 Static Portfolio Bucket ---
+
 resource "aws_s3_bucket" "portfolio_bucket" {
   bucket = "${var.s3_bucket_prefix}-${random_id.bucket_suffix.hex}"
 }
@@ -43,7 +43,6 @@ resource "aws_s3_bucket_policy" "portfolio_bucket_policy" {
   depends_on = [aws_s3_bucket_public_access_block.portfolio_public_access]
 }
 
-# --- Python Lambda API Function Deployment ---
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_file = "${path.module}/lambda_function.py"
