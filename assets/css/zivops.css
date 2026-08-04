@@ -276,34 +276,117 @@ h1.glitch {
 }
 
 
+/* 3D Flip Skill Cards */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1.5rem;
     padding: 2rem;
 }
 
 .skill-card {
+    background: transparent;
+    border: none;
+    padding: 0;
+    height: 220px;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.skill-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    border-radius: 12px;
+}
+
+.skill-card.flipped .skill-card-inner,
+.skill-card:hover .skill-card-inner {
+    transform: rotateY(180deg);
+}
+
+.skill-card-front,
+.skill-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    padding: 1.8rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.skill-card-front {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    padding: 2rem 1rem;
-    border-radius: 12px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     backdrop-filter: blur(5px);
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.skill-card i {
+.skill-card-front i {
     font-size: 2.5rem;
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
-.skill-card:hover {
-    transform: translateY(-5px);
+.skill-card:hover .skill-card-front {
     border-color: var(--primary);
     box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
 }
+
+.skill-card-back {
+    background: linear-gradient(135deg, rgba(22, 27, 34, 0.95), rgba(13, 17, 23, 0.95));
+    border: 1px solid var(--primary);
+    transform: rotateY(180deg);
+    box-shadow: 0 0 25px rgba(88, 166, 255, 0.3);
+}
+
+.skill-card-back h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin: 0.3rem 0;
+}
+
+.cert-icon {
+    font-size: 2.5rem;
+    color: #e3b341;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 8px rgba(227, 179, 65, 0.6));
+    animation: cert-pulse 2s infinite ease-in-out;
+}
+
+@keyframes cert-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.cert-status {
+    color: var(--neon-green);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    margin: 0.3rem 0;
+}
+
+.cert-badge {
+    background: rgba(88, 166, 255, 0.15);
+    color: #58a6ff;
+    padding: 0.25rem 0.7rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-family: 'Fira Code', monospace;
+    border: 1px solid rgba(88, 166, 255, 0.3);
+    margin-top: 0.3rem;
+}
+
 
 /* Projects Glass Card */
 .projects {
