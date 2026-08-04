@@ -4,7 +4,7 @@ provider "aws" {
 
 # --- S3 Static Portfolio Bucket ---
 resource "aws_s3_bucket" "portfolio_bucket" {
-  bucket = "alex-devops-portfolio-bucket-${random_id.bucket_suffix.hex}"
+  bucket = "${var.s3_bucket_prefix}-${random_id.bucket_suffix.hex}"
 }
 
 resource "random_id" "bucket_suffix" {
@@ -51,7 +51,7 @@ data "archive_file" "lambda_zip" {
 }
 
 resource "aws_iam_role" "lambda_exec" {
-  name = "serverless_lambda_exec_role"
+  name = var.iam_role_name
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -70,13 +70,13 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
 }
 
 resource "aws_cloudwatch_log_group" "lambda_logs" {
-  name              = "/aws/lambda/devops_portfolio_api"
+  name              = "/aws/lambda/${var.lambda_function_name}"
   retention_in_days = 14
 }
 
 resource "aws_lambda_function" "api_backend" {
   filename         = data.archive_file.lambda_zip.output_path
-  function_name    = "devops_portfolio_api"
+  function_name    = var.lambda_function_name
   role             = aws_iam_role.lambda_exec.arn
   handler          = "lambda_function.lambda_handler"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
