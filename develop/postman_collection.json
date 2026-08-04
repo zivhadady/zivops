@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+		"name": "DevOps Portfolio API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Trigger Serverless API (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"company\": \"Acme Corp\",\n  \"contact_name\": \"Wile E. Coyote\",\n  \"email\": \"wile.e@acmecorp.com\",\n  \"inquiry_type\": \"DevOps Consulting\",\n  \"message\": \"We need help migrating our monolith to Kubernetes and setting up a CI/CD pipeline.\"\n}"
+				},
+				"url": {
+					"raw": "{{lambda_api_url}}",
+					"host": [
+						"{{lambda_api_url}}"
+					]
+				},
+				"description": "Send a POST request with the company name to trigger the appointment link generation."
+			},
+			"response": []
+		},
+		{
+			"name": "Trigger Serverless API (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{lambda_api_url}}?company=AcmeCorp",
+					"host": [
+						"{{lambda_api_url}}"
+					],
+					"query": [
+						{
+							"key": "company",
+							"value": "AcmeCorp"
+						}
+					]
+				},
+				"description": "Send a GET request passing the company name in the URL query string."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "lambda_api_url",
+			"value": "https://<your-lambda-url>.lambda-url.us-east-1.on.aws"
+		}
+	]
+}
