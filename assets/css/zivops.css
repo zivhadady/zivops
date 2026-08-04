@@ -200,6 +200,8 @@ h1.glitch {
     padding: 1.5rem;
     font-family: 'Fira Code', monospace;
     font-size: 0.95rem;
+    height: 280px;
+    overflow-y: auto;
 }
 
 .prompt {
@@ -216,10 +218,24 @@ h1.glitch {
     color: var(--neon-green);
 }
 
-.cursor {
+.terminal-cursor {
     display: inline-block;
-    width: 10px;
+    width: 8px;
+    height: 15px;
+    background: var(--text-main);
+    margin-left: 2px;
     animation: blink 1s step-end infinite;
+}
+
+.terminal-link {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary);
+    transition: color 0.3s;
+}
+
+.terminal-link:hover {
+    color: var(--neon-green);
 }
 
 @keyframes blink {
@@ -343,6 +359,101 @@ h1.glitch {
     background: var(--primary);
     color: var(--bg-color);
     box-shadow: 0 0 15px var(--primary);
+}
+
+.summary-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto 2.5rem auto;
+    text-align: center;
+    line-height: 1.7;
+}
+
+.skill-card h3 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0.8rem 0 0.4rem 0;
+}
+
+/* Experience Section Styles */
+.experience {
+    padding: 4rem 2rem;
+}
+
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.experience-card {
+    padding: 2.5rem;
+    text-align: left;
+}
+
+.experience-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.experience-card h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    margin: 0;
+}
+
+.experience-card .company-name {
+    color: var(--primary);
+    font-size: 1.1rem;
+    font-family: 'Fira Code', monospace;
+    margin: 0;
+}
+
+.experience-card ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.experience-card li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-main);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.experience-card li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* Projects Section Styles */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 footer {

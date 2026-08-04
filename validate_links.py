@@ -15,14 +15,16 @@ def get_baseurl():
         pass
     return baseurl
 
-def check_html_links(directory):
+def check_html_links(directory, baseurl_override=None):
     html_files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(directory) for f in filenames if f.endswith('.html')]
     broken = False
-    baseurl = get_baseurl()
+    baseurl = baseurl_override if baseurl_override is not None else get_baseurl()
     
     for html_file in html_files:
         with open(html_file, 'r', encoding='utf-8') as f:
             content = f.read()
+            # Strip script tags to avoid checking href attributes inside JS code
+            content = re.sub(r'<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>', '', content, flags=re.IGNORECASE)
             # Find simple href links
             links = re.findall(r'href="([^"]+)"', content)
             for link in links:
@@ -52,4 +54,5 @@ def check_html_links(directory):
 
 if __name__ == "__main__":
     dir_to_check = sys.argv[1] if len(sys.argv) > 1 else '.'
-    check_html_links(dir_to_check)
+    baseurl_override = sys.argv[2] if len(sys.argv) > 2 else None
+    check_html_links(dir_to_check, baseurl_override)
