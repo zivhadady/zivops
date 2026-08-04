@@ -6,7 +6,7 @@ title: Ziv Hadady | DevOps & Infrastructure Engineer
     <div class="hero-content">
         <h1 class="glitch" data-text="Ziv Hadady">Ziv Hadady</h1>
         <p class="subtitle">DevOps & Infrastructure Engineer</p>
-        <p class="summary-text">DevOps and Infrastructure Engineer with 6+ years of experience supporting production systems across cloud and on-premises environments. Specialized in Linux, Kubernetes, GitOps, Infrastructure as Code, and automating secure enterprise-grade systems.</p>
+        <p class="summary-text">DevOps and Infrastructure Engineer with 6+ years of experience supporting production systems across cloud and on-premises environments.<br>Specialized in Linux, Kubernetes, GitOps, Infrastructure as Code, and automating secure enterprise-grade systems.</p>
         
         <div class="terminal">
             <div class="terminal-header">
@@ -116,7 +116,7 @@ title: Ziv Hadady | DevOps & Infrastructure Engineer
                 <span>AWS S3</span>
                 <span>IAM</span>
             </div>
-            <a href="https://github.com/zivhadady/zivops/tree/main/terraform" class="cyber-btn" target="_blank">
+            <a href="https://github.com/zivhadady/zivops/tree/main/api/terraform" class="cyber-btn" target="_blank">
                 <span>View Terraform Code</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -124,7 +124,7 @@ title: Ziv Hadady | DevOps & Infrastructure Engineer
 
         <div class="glass-card project-card">
             <h3><i class="fas fa-microchip"></i> Serverless Booking API</h3>
-            <p>A Python-based AWS Lambda function that dynamically greets visitors and serves secure calendar booking links. Deployed as a serverless function URL.</p>
+            <p>A Python-based AWS Lambda function that dynamically greets visitors and serves secure calendar booking links.<br>Deployed as a serverless function URL.</p>
             <div class="tech-tags">
                 <span>Python</span>
                 <span>AWS Lambda</span>
@@ -138,7 +138,7 @@ title: Ziv Hadady | DevOps & Infrastructure Engineer
 
         <div class="glass-card project-card">
             <h3><i class="fas fa-network-wired"></i> GitOps Kubernetes Lab</h3>
-            <p>A Terraform and Ansible codebase provisioning a three-node Ubuntu Kubernetes cluster on VMware vSphere. Fully automated via Rancher, Argo CD, Helm, and RBAC.</p>
+            <p>A Terraform and Ansible codebase provisioning a three-node Ubuntu Kubernetes cluster on VMware vSphere.<br>Fully automated via Rancher, Argo CD, Helm, and RBAC.</p>
             <div class="tech-tags">
                 <span>Kubernetes</span>
                 <span>Argo CD</span>
@@ -182,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function() {
             if (charIndex < text.length) {
                 textSpan.textContent += text[charIndex];
                 charIndex++;
-                // Add human-like typing speed variation
                 setTimeout(typeChar, 40 + Math.random() * 60);
             } else {
                 cursor.remove();
@@ -195,9 +194,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function printOutput(text, callback) {
         const p = document.createElement("p");
         p.className = "output";
-        // Convert URLs to clickable links
         let processedText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" class="terminal-link">$1</a>');
-        // Convert newlines to HTML breaks
         p.innerHTML = processedText.replace(/\n/g, "<br>");
         terminalBody.appendChild(p);
         setTimeout(callback, 800);
@@ -228,7 +225,6 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             printOutput(currentLine.text, runTerminal);
         }
-        // Auto scroll to bottom
         terminalBody.scrollTop = terminalBody.scrollHeight;
     }
 
