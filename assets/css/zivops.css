@@ -154,10 +154,18 @@ h1.glitch {
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    margin-bottom: 3rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #3fb584;
+    background: linear-gradient(90deg, #58a6ff, #3fb584, #a5d6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+    margin-bottom: 2.5rem;
+    display: inline-block;
 }
+
 
 /* Terminal Mockup */
 .terminal {
@@ -257,11 +265,15 @@ h1.glitch {
 
 /* Skills Grid */
 .section-title {
-    font-size: 2rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
     margin-bottom: 2rem;
     text-align: center;
-    color: #fff;
+    color: #ffffff;
+    letter-spacing: 0.5px;
 }
+
 
 .skills-grid {
     display: grid;
@@ -384,9 +396,17 @@ h1.glitch {
 }
 
 .skill-card h3 {
+    font-family: 'Outfit', sans-serif;
     font-size: 1.2rem;
-    color: #fff;
+    font-weight: 600;
+    color: #58a6ff;
     margin: 0.8rem 0 0.4rem 0;
+}
+
+.skill-card span {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #a5d6ff;
 }
 
 /* Experience Section Styles */
@@ -417,17 +437,25 @@ h1.glitch {
 }
 
 .experience-card h3 {
+    font-family: 'Outfit', sans-serif;
     font-size: 1.4rem;
-    color: #fff;
+    font-weight: 600;
+    color: #ffffff;
     margin: 0;
 }
 
 .experience-card .company-name {
-    color: var(--primary);
-    font-size: 1.1rem;
+    color: #e3b341;
+    font-size: 1.05rem;
+    font-weight: 600;
     font-family: 'Fira Code', monospace;
     margin: 0;
+    background: rgba(227, 179, 65, 0.12);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid rgba(227, 179, 65, 0.3);
 }
+
 
 .experience-card ul {
     list-style-type: none;
