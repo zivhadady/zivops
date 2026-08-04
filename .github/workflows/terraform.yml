@@ -27,12 +27,12 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./api
+        working-directory: ./api/terraform
 
       - name: Terraform Format Check
         run: terraform fmt -check
-        working-directory: ./api
+        working-directory: ./api/terraform
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: ./api
+        working-directory: ./api/terraform
