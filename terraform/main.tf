@@ -1,13 +1,8 @@
-variable "calendar_link" {
-  description = "The Google Calendar booking link"
-  type        = string
-  sensitive   = true
-}
-
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
 
+# --- S3 Static Portfolio Bucket ---
 resource "aws_s3_bucket" "portfolio_bucket" {
   bucket = "alex-devops-portfolio-bucket-${random_id.bucket_suffix.hex}"
 }
@@ -24,7 +19,7 @@ resource "aws_s3_bucket_website_configuration" "portfolio_website" {
 }
 
 resource "aws_s3_bucket_public_access_block" "portfolio_public_access" {
-  bucket = aws_s3_bucket.portfolio_bucket.id
+  bucket                  = aws_s3_bucket.portfolio_bucket.id
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
@@ -45,12 +40,13 @@ resource "aws_s3_bucket_policy" "portfolio_bucket_policy" {
       }
     ]
   })
-  depends_on = [ aws_s3_bucket_public_access_block.portfolio_public_access ]
+  depends_on = [aws_s3_bucket_public_access_block.portfolio_public_access]
 }
 
+# --- Python Lambda API Function Deployment ---
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "../api/lambda_function.py"
+  source_file = "${path.module}/../api/lambda_function.py"
   output_path = "${path.module}/lambda_function.zip"
 }
 
@@ -73,6 +69,11 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+resource "aws_cloudwatch_log_group" "lambda_logs" {
+  name              = "/aws/lambda/devops_portfolio_api"
+  retention_in_days = 14
+}
+
 resource "aws_lambda_function" "api_backend" {
   filename         = data.archive_file.lambda_zip.output_path
   function_name    = "devops_portfolio_api"
@@ -86,6 +87,11 @@ resource "aws_lambda_function" "api_backend" {
       CALENDAR_LINK = var.calendar_link
     }
   }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.lambda_basic_execution,
+    aws_cloudwatch_log_group.lambda_logs
+  ]
 }
 
 resource "aws_lambda_function_url" "api_url" {
@@ -96,12 +102,8 @@ resource "aws_lambda_function_url" "api_url" {
     allow_credentials = true
     allow_origins     = ["*"]
     allow_methods     = ["*"]
-    allow_headers     = ["date", "keep-alive"]
+    allow_headers     = ["date", "keep-alive", "content-type"]
     expose_headers    = ["keep-alive", "date"]
     max_age           = 86400
   }
-}
-
-output "lambda_url" {
-  value = aws_lambda_function_url.api_url.function_url
 }
