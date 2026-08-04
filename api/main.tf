@@ -46,7 +46,7 @@ resource "aws_s3_bucket_policy" "portfolio_bucket_policy" {
 # --- Python Lambda API Function Deployment ---
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "${path.module}/../api/lambda_function.py"
+  source_file = "${path.module}/lambda_function.py"
   output_path = "${path.module}/lambda_function.zip"
 }
 

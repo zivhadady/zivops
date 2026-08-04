@@ -1,4 +1,4 @@
-# Example Terraform variables file
+# Example Terraform variables file for Python API Lambda deployment
 # Copy this file to terraform.tfvars and fill in your values
 aws_region    = "us-east-1"
 calendar_link = "https://calendar.google.com/calendar/appointments/schedules/your-schedule-id"

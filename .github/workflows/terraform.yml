@@ -6,14 +6,12 @@ on:
       - main
       - develop
     paths:
-      - 'terraform/**'
       - 'api/**'
   pull_request:
     branches:
       - main
       - develop
     paths:
-      - 'terraform/**'
       - 'api/**'
 
 jobs:
@@ -29,12 +27,12 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./terraform
+        working-directory: ./api
 
       - name: Terraform Format Check
         run: terraform fmt -check
-        working-directory: ./terraform
+        working-directory: ./api
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: ./terraform
+        working-directory: ./api
