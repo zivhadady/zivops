@@ -32,103 +32,39 @@ title: Ziv Hadady | DevOps & Infrastructure Engineer
 <section class="skills" id="skills">
     <h2 class="section-title"><i class="fas fa-layer-group"></i> Tech Stack</h2>
     <div class="skills-grid">
-        <div class="skill-card" tabindex="0">
-            <div class="skill-card-inner">
-                <div class="skill-card-front">
-                    <i class="fab fa-aws"></i>
-                    <h3>AWS & Azure</h3>
-                    <span>EKS, S3, Azure Cost Management, Budgets</span>
-                </div>
-                <div class="skill-card-back">
-                    <i class="fas fa-award cert-icon"></i>
-                    <h3>Cloud Infrastructure</h3>
-                    <p class="cert-status"><i class="fas fa-check-circle"></i> Certified & Verified</p>
-                    <span class="cert-badge">AWS & Azure Ops</span>
-                </div>
-            </div>
+        <div class="skill-card">
+            <i class="fab fa-aws"></i>
+            <h3>AWS & Azure</h3>
+            <span>EKS, S3, Azure Cost Management, Budgets</span>
         </div>
-
-        <div class="skill-card" tabindex="0">
-            <div class="skill-card-inner">
-                <div class="skill-card-front">
-                    <i class="fas fa-dharmachakra"></i>
-                    <h3>Kubernetes</h3>
-                    <span>Helm, Argo CD, Rancher, RBAC, Container Security</span>
-                </div>
-                <div class="skill-card-back">
-                    <i class="fas fa-certificate cert-icon"></i>
-                    <h3>Kubernetes & GitOps</h3>
-                    <p class="cert-status"><i class="fas fa-check-circle"></i> Certified Expertise</p>
-                    <span class="cert-badge">Cluster Orchestration</span>
-                </div>
-            </div>
+        <div class="skill-card">
+            <i class="fas fa-dharmachakra"></i>
+            <h3>Kubernetes</h3>
+            <span>Helm, Argo CD, Rancher, RBAC, Container Security</span>
         </div>
-
-        <div class="skill-card" tabindex="0">
-            <div class="skill-card-inner">
-                <div class="skill-card-front">
-                    <i class="fas fa-code-branch"></i>
-                    <h3>CI/CD & IaC</h3>
-                    <span>Terraform, Ansible/AWX, GitLab CI, Jenkins, Azure DevOps</span>
-                </div>
-                <div class="skill-card-back">
-                    <i class="fas fa-award cert-icon"></i>
-                    <h3>IaC & Automation</h3>
-                    <p class="cert-status"><i class="fas fa-check-circle"></i> Verified Mastery</p>
-                    <span class="cert-badge">Terraform & Ansible</span>
-                </div>
-            </div>
+        <div class="skill-card">
+            <i class="fas fa-code-branch"></i>
+            <h3>CI/CD & IaC</h3>
+            <span>Terraform, Ansible/AWX, GitLab CI, Jenkins, Azure DevOps</span>
         </div>
-
-        <div class="skill-card" tabindex="0">
-            <div class="skill-card-inner">
-                <div class="skill-card-front">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>DevSecOps</h3>
-                    <span>Infrastructure Hardening, IAM, VPN, Firewalls</span>
-                </div>
-                <div class="skill-card-back">
-                    <i class="fas fa-user-shield cert-icon"></i>
-                    <h3>Security Hardening</h3>
-                    <p class="cert-status"><i class="fas fa-check-circle"></i> DevSecOps Verified</p>
-                    <span class="cert-badge">Enterprise Defense</span>
-                </div>
-            </div>
+        <div class="skill-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>DevSecOps</h3>
+            <span>Infrastructure Hardening, IAM, VPN, Firewalls</span>
         </div>
-
-        <div class="skill-card" tabindex="0">
-            <div class="skill-card-inner">
-                <div class="skill-card-front">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Observability</h3>
-                    <span>Prometheus, Grafana, Elasticsearch, Kibana</span>
-                </div>
-                <div class="skill-card-back">
-                    <i class="fas fa-microscope cert-icon"></i>
-                    <h3>Observability</h3>
-                    <p class="cert-status"><i class="fas fa-check-circle"></i> Telemetry & Monitoring</p>
-                    <span class="cert-badge">Prometheus & Grafana</span>
-                </div>
-            </div>
+        <div class="skill-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Observability</h3>
+            <span>Prometheus, Grafana, Elasticsearch, Kibana</span>
         </div>
-
-        <div class="skill-card" tabindex="0">
-            <div class="skill-card-inner">
-                <div class="skill-card-front">
-                    <i class="fab fa-python"></i>
-                    <h3>Automation</h3>
-                    <span>Python, Bash, PowerShell, Linux/Windows Systems</span>
-                </div>
-                <div class="skill-card-back">
-                    <i class="fas fa-terminal cert-icon"></i>
-                    <h3>Scripting & Systems</h3>
-                    <p class="cert-status"><i class="fas fa-check-circle"></i> Advanced Automation</p>
-                    <span class="cert-badge">Python & Bash Mastery</span>
-                </div>
-            </div>
+        <div class="skill-card">
+            <i class="fab fa-python"></i>
+            <h3>Automation</h3>
+            <span>Python, Bash, PowerShell, Linux/Windows Systems</span>
         </div>
     </div>
 </section>
+
 
 
 <section class="experience" id="experience">
@@ -299,19 +235,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     runTerminal();
-
-    // Skill card flip toggle on click & enter key
-    document.querySelectorAll('.skill-card').forEach(card => {
-        card.addEventListener('click', () => {
-            card.classList.toggle('flipped');
-        });
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                card.classList.toggle('flipped');
-            }
-        });
-    });
 });
 </script>
+
 
