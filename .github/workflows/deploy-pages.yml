@@ -11,6 +11,8 @@ on:
       - '**/*.html'
       - '**/*.css'
       - '_config.yml'
+      - '.github/workflows/**'
+  workflow_dispatch:
 
 permissions:
   contents: read
