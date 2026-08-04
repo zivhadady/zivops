@@ -54,6 +54,17 @@ body {
     z-index: 1000;
 }
 
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+section, div[id] {
+    scroll-margin-top: 100px;
+}
+
+
 .logo {
     font-size: 1.5rem;
     font-weight: 700;
@@ -482,35 +493,51 @@ footer {
 @media (max-width: 768px) {
     .glass-nav {
         flex-direction: column;
-        gap: 0.8rem;
-        padding: 0.8rem 1rem;
+        padding: 0.6rem 1rem;
+        gap: 0.4rem;
+    }
+
+    .nav-brand {
+        width: 100%;
+        justify-content: space-between;
     }
 
     .nav-links {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 0.6rem;
+        width: 100%;
     }
 
     .nav-links a {
-        margin: 0 0.4rem;
-        font-size: 0.95rem;
+        margin: 0;
+        font-size: 0.85rem;
     }
 
     .system-status {
-        font-size: 0.8rem;
-        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
     }
 
     main {
-        padding-top: 130px;
+        padding-top: 115px;
         padding-left: 1rem;
         padding-right: 1rem;
     }
 
+    section, div[id] {
+        scroll-margin-top: 115px;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+
     h1.glitch {
         font-size: 2.2rem;
+        margin-top: 0.5rem;
     }
 
     .subtitle {
@@ -519,9 +546,11 @@ footer {
     }
 
     .terminal-body {
-        font-size: 0.85rem;
-        height: 250px;
-        padding: 1rem;
+        font-size: 0.8rem;
+        height: 240px;
+        padding: 0.8rem;
+        word-break: break-word;
+        overflow-x: hidden;
     }
 
     .experience {
@@ -529,13 +558,13 @@ footer {
     }
 
     .experience-card {
-        padding: 1.5rem;
+        padding: 1.2rem;
     }
 
     .experience-card .card-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.4rem;
+        gap: 0.3rem;
     }
 
     .experience-card h3 {
@@ -551,7 +580,7 @@ footer {
     }
 
     .glass-card {
-        padding: 1.5rem;
+        padding: 1.2rem;
     }
 
     .projects-grid {
@@ -560,19 +589,44 @@ footer {
     }
 
     .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 1rem;
         padding: 1rem 0;
+    }
+
+    .skill-card {
+        padding: 1.2rem;
+    }
+
+    .skill-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .skill-card span {
+        font-size: 0.85rem;
+        word-break: break-word;
     }
 }
 
 @media (max-width: 480px) {
+    main {
+        padding-top: 125px;
+    }
+
+    section, div[id] {
+        scroll-margin-top: 125px;
+    }
+
     h1.glitch {
         font-size: 1.8rem;
     }
 
     .summary-text {
         font-size: 0.95rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
     }
 
     .cyber-btn {
