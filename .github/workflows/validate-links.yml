@@ -16,28 +16,16 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
-      - name: Set dynamic baseurl and build
-        id: build_step
-        run: |
-          HEAD_BRANCH="${{ github.event.workflow_run.head_branch }}"
-          if [ "$HEAD_BRANCH" = "main" ]; then
-            BASEURL="/zivops"
-          else
-            BASEURL="/zivops/$HEAD_BRANCH"
-          fi
-          echo "baseurl=$BASEURL" >> $GITHUB_OUTPUT
-          bundle exec jekyll build --baseurl "$BASEURL" --destination ./_site
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
 
       - name: Run validate_links.py on built site
-        run: python validate_links.py ./_site "${{ steps.build_step.outputs.baseurl }}"
+        run: python validate_links.py ./_site

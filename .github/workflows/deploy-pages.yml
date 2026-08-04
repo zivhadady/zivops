@@ -13,37 +13,38 @@ on:
       - '_config.yml'
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      - name: Set dynamic baseurl and build
-        id: build_step
-        run: |
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            BASEURL="/zivops"
-            DEST_DIR=""
-          else
-            BASEURL="/zivops/${{ github.ref_name }}"
-            DEST_DIR="${{ github.ref_name }}"
-          fi
-          echo "dest_dir=$DEST_DIR" >> $GITHUB_OUTPUT
-          bundle exec jekyll build --baseurl "$BASEURL" --destination ./_site
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          destination_dir: ${{ steps.build_step.outputs.dest_dir }}
+        id: deployment
+        uses: actions/deploy-pages@v4
