@@ -1,0 +1,12 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Ensure shell scripts always keep LF endings (required for Linux/containers)
+*.sh text eol=lf
+
+# Configuration and source files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.md text
