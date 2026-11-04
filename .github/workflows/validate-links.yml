@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - develop
+      - 'refactor/**'
+      - 'feat/**'
+      - 'feature/**'
   pull_request:
     branches:
       - main
@@ -13,7 +16,7 @@ on:
 
 jobs:
   validate:
-    name: Build & Validate Site
+    name: Build & Validate HTML Links
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
