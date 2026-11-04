@@ -17,6 +17,9 @@ _site/
 vendor/
 bin/
 
+# Local Dev Helper
+serve.js
+
 # Node / NPM (if used)
 node_modules/
 npm-debug.log
