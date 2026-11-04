@@ -1,134 +1,192 @@
+#!/usr/bin/env python3
+"""Site link and asset integrity validator.
+
+Scans generated HTML files to verify internal hyperlinks, asset references (images,
+stylesheets, scripts), and basic HTML tag balancing before deployment.
+"""
+
+import argparse
 import os
 import re
 import sys
 from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import unquote, urlparse
 
-STANDARD_HTML_TAGS = {
-    'a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo',
-    'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup',
-    'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed',
-    'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-    'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd',
-    'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'meta', 'meter', 'nav',
-    'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre',
-    'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small',
-    'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'svg', 'table', 'tbody', 'td',
-    'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul',
-    'var', 'video', 'wbr', 'path', 'g', 'circle', 'rect', 'line', 'polygon', 'polyline', '!doctype'
-}
-
+# Standard HTML self-closing / void elements (HTML5 spec)
 VOID_TAGS = {
-    'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr', '!doctype'
+    "area", "base", "br", "col", "embed", "hr", "img", "input",
+    "link", "meta", "param", "source", "track", "wbr", "!doctype",
 }
 
-class HTMLValidator(HTMLParser):
-    def __init__(self, filename):
+IGNORED_DIRS = {".git", ".jekyll-cache", "node_modules", "vendor"}
+EXTERNAL_SCHEMES = {"http", "https", "mailto", "tel", "javascript", "data"}
+
+
+class HTMLStructureValidator(HTMLParser):
+    """Checks for unclosed or mismatched HTML tags."""
+
+    def __init__(self, filepath: Path):
         super().__init__()
-        self.filename = filename
+        self.filepath = filepath
         self.tag_stack = []
         self.errors = []
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, tag: str, attrs):
         tag_lower = tag.lower()
-        if tag_lower not in STANDARD_HTML_TAGS:
-            self.errors.append(f"Invalid/unknown HTML tag `<{tag}>` found in {self.filename}")
         if tag_lower not in VOID_TAGS:
             self.tag_stack.append(tag_lower)
 
-    def handle_endtag(self, tag):
+    def handle_endtag(self, tag: str):
         tag_lower = tag.lower()
         if tag_lower in VOID_TAGS:
             return
+
         if not self.tag_stack:
-            self.errors.append(f"Unexpected closing tag `</{tag}>` without matching start tag in {self.filename}")
+            self.errors.append(f"Unexpected closing tag </{tag}> in {self.filepath}")
             return
-        last_tag = self.tag_stack.pop()
-        if last_tag != tag_lower:
-            self.errors.append(f"Mismatched HTML tag: expected `</{last_tag}>`, got `</{tag}>` in {self.filename}")
 
-    def check_unclosed(self):
+        expected = self.tag_stack.pop()
+        if expected != tag_lower:
+            self.errors.append(
+                f"Tag mismatch in {self.filepath}: expected </{expected}>, found </{tag}>"
+            )
+
+    def finalize(self):
         if self.tag_stack:
-            self.errors.append(f"Unclosed HTML tags in {self.filename}: {', '.join(self.tag_stack)}")
+            unclosed = ", ".join(f"<{t}>" for t in self.tag_stack)
+            self.errors.append(f"Unclosed tag(s) in {self.filepath}: {unclosed}")
 
-def get_baseurl():
-    baseurl = ""
+
+def extract_baseurl_from_config(config_path: Path) -> str:
+    """Extracts baseurl value from _config.yml if present."""
+    if not config_path.is_file():
+        return ""
     try:
-        with open('_config.yml', 'r') as f:
-            for line in f:
-                if line.startswith('baseurl:'):
-                    match = re.search(r'baseurl:\s*["\']?([^"\']+)["\']?', line)
-                    if match:
-                        baseurl = match.group(1).strip()
-    except Exception:
+        content = config_path.read_text(encoding="utf-8")
+        match = re.search(r"^baseurl:\s*[\"']?([^\"'\n]+)[\"']?", content, re.MULTILINE)
+        if match:
+            return match.group(1).strip().rstrip("/")
+    except OSError:
         pass
-    return baseurl
+    return ""
 
-def check_html_links(directory, baseurl_override=None):
-    IGNORED_DIRS = {'vendor', '.git', '.jekyll-cache', 'node_modules'}
-    
-    html_files = []
-    for dp, dn, filenames in os.walk(directory):
-        dn[:] = [d for d in dn if d not in IGNORED_DIRS]
-        for f in filenames:
-            if f.endswith('.html'):
-                html_files.append(os.path.join(dp, f))
 
-    broken = False
-    baseurl = baseurl_override if baseurl_override is not None else get_baseurl()
-    
-    for html_file in html_files:
-        with open(html_file, 'r', encoding='utf-8') as f:
-            content = f.read()
-            
-            # Strict HTML Structure & Tag Check
-            validator = HTMLValidator(html_file)
-            try:
-                validator.feed(content)
-                validator.check_unclosed()
-                if validator.errors:
-                    for err in validator.errors:
-                        print(f"❌ HTML Error: {err}")
-                    broken = True
-            except Exception as e:
-                print(f"❌ HTML Parsing Error in {html_file}: {e}")
-                broken = True
+def validate_internal_link(target: str, root_dir: Path, source_file: Path, baseurl: str) -> bool:
+    """Verifies that an internal reference resolves to an existing file."""
+    parsed = urlparse(target)
+    path_part = unquote(parsed.path)
 
-            # Strip script tags to avoid checking href attributes inside JS code strings
-            content_no_js = re.sub(r'<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>', '', content, flags=re.IGNORECASE)
-            
-            # Find href and src attribute links
-            href_links = re.findall(r'href="([^"]+)"', content_no_js)
-            src_links = re.findall(r'src="([^"]+)"', content_no_js)
-            all_links = set(href_links + src_links)
-            
-            for link in all_links:
-                if link.startswith(('http', '//', 'data:', '#', 'mailto:', 'tel:', 'javascript:', '{{')):
-                    continue
-                
-                # Resolve target path based on whether the link is absolute or relative
-                if baseurl and link.startswith(baseurl):
-                    relative_to_root = link[len(baseurl):].lstrip('/')
-                    target_path = os.path.join(directory, relative_to_root)
-                elif link.startswith('/'):
-                    target_path = os.path.join(directory, link.lstrip('/'))
-                else:
-                    target_path = os.path.join(os.path.dirname(html_file), link)
+    if not path_part or path_part == "/":
+        return True
 
-                if not os.path.exists(target_path) and not os.path.exists(target_path + '.html') and not os.path.exists(target_path + '/index.html'):
-                    print(f"❌ Broken link/asset found in {html_file}: {link}")
-                    broken = True
+    # Strip configured Jekyll baseurl prefix if matching
+    if baseurl and path_part.startswith(baseurl):
+        path_part = path_part[len(baseurl):]
 
-    if broken:
-        print("Validation failed: HTML errors, broken links, or missing asset paths detected!")
-        sys.exit(1)
+    if path_part.startswith("/"):
+        candidate = root_dir / path_part.lstrip("/")
     else:
-        print("✅ All HTML syntax, local links, and assets are valid!")
+        candidate = source_file.parent / path_part
+
+    # Check direct match, .html extension, or directory index.html
+    return (
+        candidate.exists()
+        or candidate.with_suffix(".html").exists()
+        or (candidate.is_dir() and (candidate / "index.html").exists())
+    )
+
+
+def validate_site(target_dir: str, baseurl_override: str = None) -> bool:
+    root = Path(target_dir).resolve()
+    if not root.exists():
+        print(f"[ERROR] Target directory does not exist: {root}", file=sys.stderr)
+        return False
+
+    baseurl = (
+        baseurl_override.rstrip("/")
+        if baseurl_override is not None
+        else extract_baseurl_from_config(Path("_config.yml"))
+    )
+
+    html_files = [
+        path for path in root.rglob("*.html")
+        if not any(part in IGNORED_DIRS for part in path.parts)
+    ]
+
+    if not html_files:
+        print(f"[WARN] No HTML files found in {root}")
+        return True
+
+    has_errors = False
+    link_pattern = re.compile(r'(?:href|src)=["\']([^"\']+)["\']', re.IGNORECASE)
+
+    for html_file in html_files:
+        try:
+            content = html_file.read_text(encoding="utf-8")
+        except OSError as err:
+            print(f"[ERROR] Failed to read {html_file}: {err}", file=sys.stderr)
+            has_errors = True
+            continue
+
+        # Tag balance check
+        parser = HTMLStructureValidator(html_file)
+        try:
+            parser.feed(content)
+            parser.finalize()
+            for err in parser.errors:
+                print(f"[HTML ERROR] {err}", file=sys.stderr)
+                has_errors = True
+        except Exception as err:
+            print(f"[HTML PARSE ERROR] {html_file}: {err}", file=sys.stderr)
+            has_errors = True
+
+        # Extract links, ignoring scripts and styles
+        sanitized = re.sub(
+            r"<(script|style)\b[^>]*>[\s\S]*?<\/\1>", "", content, flags=re.IGNORECASE
+        )
+
+        for match in link_pattern.finditer(sanitized):
+            url = match.group(1).strip()
+
+            # Skip empty, anchors, Liquid templates, and external schemes
+            if not url or url.startswith(("#", "{{", "{%")):
+                continue
+
+            parsed = urlparse(url)
+            if parsed.scheme.lower() in EXTERNAL_SCHEMES or url.startswith("//"):
+                continue
+
+            if not validate_internal_link(url, root, html_file, baseurl):
+                print(f"[BROKEN LINK] {html_file.name} -> {url}", file=sys.stderr)
+                has_errors = True
+
+    return not has_errors
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Validate HTML links and markup in built site.")
+    parser.add_argument(
+        "directory",
+        nargs="?",
+        default="./_site" if Path("./_site").exists() else ".",
+        help="Directory containing HTML files to scan (default: ./_site or .)",
+    )
+    parser.add_argument(
+        "--baseurl",
+        default=None,
+        help="Explicit baseurl prefix override (e.g. /zivops)",
+    )
+
+    args = parser.parse_args()
+    success = validate_site(args.directory, args.baseurl)
+
+    if not success:
+        print("\nSite validation failed with errors.", file=sys.stderr)
+        sys.exit(1)
+
+    print("Site validation passed: all HTML markup and internal links are valid.")
+
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        dir_to_check = sys.argv[1]
-    else:
-        dir_to_check = './_site' if os.path.exists('./_site') else '.'
-        
-    baseurl_override = sys.argv[2] if len(sys.argv) > 2 else None
-    check_html_links(dir_to_check, baseurl_override)
+    main()

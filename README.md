@@ -1,60 +1,86 @@
-# ZivOps — DevOps & Cloud Architect Portfolio
+# ZivOps
 
-A professional, high-performance static website architected for modern DevOps hosting, automated via Terraform, and deployed continuously with GitHub Actions.
+Personal portfolio, infrastructure automation
 
----
-
-## 🚀 Quick Start (Local Development)
-
-### 1. Prerequisites
-Ensure you have the following installed on your machine:
-*   **Git**
-*   **Ruby** (3.0 or higher)
-*   **Bundler** (`gem install bundler`)
-*   **Terraform** (for infrastructure management)
-
-### 2. Auto Setup
-Run the setup script from the root of the project to check prerequisites, configure the local Ruby environment, and install all dependencies:
-```bash
-chmod +x setup.sh
-./setup.sh
-```
-
-### 3. Run Locally
-Start the Jekyll local development server:
-```bash
-bundle exec jekyll serve --baseurl ""
-```
-Once started, open your web browser and navigate to:
-👉 **[http://127.0.0.1:4000/](http://127.0.0.1:4000/)**
+Live site: [zivhadady.github.io/zivops](https://zivhadady.github.io/zivops/)
 
 ---
 
-## 🛠️ Deploying to GitHub Pages (Production)
+## Overview
 
-This project features a fully automated CI/CD pipeline using GitHub Actions. 
+This repository houses the source code and automation for the ZivOps portfolio:
 
-### 1. First-Time Repository Setup
-Ensure your GitHub repository is configured to use GitHub Actions for deployment:
-1. Go to your repository on GitHub.
-2. Navigate to **Settings** -> **Pages**.
-3. Under **Build and deployment** -> **Source**, select **GitHub Actions** (instead of Deploy from a branch).
+- **Frontend**: Jekyll-based static site with simulated interactive terminal and responsive dark UI.
+- **CI/CD Pipeline**: GitHub Actions workflows for automated building, linting, and zero-downtime deployment to GitHub Pages.
+- **Site Integrity Gate**: Custom Python script (`validate_links.py`) running in CI to enforce valid HTML tag structure and prevent broken links or missing assets prior to deployment.
+- **Automation & GitOps**: Infrastructure automation showcase covering Ansible configurations, Kubernetes manifests, and Argo CD workflows.
 
-### 2. Deployment Workflow
-To deploy updates to production, push or merge your changes into the `main` branch:
+---
 
-```bash
-# Push your develop branch updates to remote
-git push origin develop
+## Repository Structure
 
-# Merge develop into main and push to deploy
-git checkout main
-git pull origin main
-git merge develop
-git push origin main
-
-# Switch back to develop to continue working
-git checkout develop
+```
+.
+├── .github/workflows/       # CI/CD pipelines
+│   ├── deploy-pages.yml     # GitHub Pages build, validation & deployment
+│   └── validate-links.yml   # PR site integrity checks
+├── _layouts/                # Jekyll layout templates
+├── assets/css/              # Stylesheets
+├── _config.yml              # Jekyll site configuration
+├── index.html               # Main portfolio landing page
+├── setup.sh                 # Local environment bootstrapping script
+└── validate_links.py        # Pre-deploy site integrity validator
 ```
 
-As soon as changes are pushed to `main`, GitHub Actions will build and deploy the site automatically. You can track progress in the **Actions** tab of your repository.
+---
+
+## Local Development
+
+### Prerequisites
+
+- Ruby (>= 3.0) and Bundler (`gem install bundler`)
+- Python 3.10+ (for running validation scripts)
+
+### Quick Start
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/zivhadady/zivops.git
+   cd zivops
+   ```
+
+2. Run the environment setup script:
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh
+   ```
+
+   *Alternatively, configure Bundler manually:*
+   ```bash
+   bundle config set --local path 'vendor/bundle'
+   bundle install
+   ```
+
+3. Launch the local Jekyll server:
+   ```bash
+   bundle exec jekyll serve --baseurl ""
+   ```
+   Open `http://127.0.0.1:4000/` in your browser.
+
+---
+
+## Quality Gates & Testing
+
+To verify internal links and HTML structure before pushing:
+
+```bash
+# Validate against source directory or built site
+python validate_links.py .
+```
+
+---
+
+## License & Security
+
+- For responsible vulnerability disclosures, refer to [SECURITY.md](SECURITY.md).
+- Maintained by Ziv Hadady.

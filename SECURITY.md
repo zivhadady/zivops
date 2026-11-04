@@ -1,28 +1,18 @@
 # Security Policy
 
-## Supported Versions
+## Scope
 
-Since this is a continuously deployed DevOps portfolio and Serverless API, we currently support the latest `main` branch deployment. 
+This repository maintains the infrastructure automation and source code for the ZivOps portfolio.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| v1.0.x  | :white_check_mark: |
-| < v1.0  | :x:                |
+## Reporting Security Issues
 
-## Reporting a Vulnerability
+If you discover a security vulnerability in the CI/CD workflows or site code, please report it responsibly:
 
-Security is a top priority for our DevSecOps infrastructure. If you discover a vulnerability in the Terraform code, Serverless Lambda API, or CI/CD pipelines, please follow these steps:
+- Please **do not** open public GitHub issues for sensitive security findings.
+- Submit a report through [GitHub Security Advisories](https://github.com/zivhadady/zivops/security/advisories/new) or contact the maintainer directly via GitHub profile details.
+- Please include:
+  - Description of the finding and affected component
+  - Reproduction steps or proof of concept
+  - Potential impact assessment
 
-1. **Do not open a public issue.** This ensures that malicious actors cannot exploit the vulnerability before we can patch it.
-2. Email your findings directly to `[EMAIL_ADDRESS]`
-3. Please include the following in your report:
-   - A detailed description of the vulnerability.
-   - Steps to reproduce the issue.
-   - Any relevant logs, screenshots, or code snippets.
-
-### What to expect:
-- You will receive an acknowledgment of your report within 48 hours.
-- If the vulnerability is verified, we will work on a patch immediately and aim to deploy the fix via our automated CI/CD pipeline within 5 business days.
-- We will notify you once the fix has been pushed to production.
-
-Thank you for helping keep our infrastructure secure!
+Reports will be acknowledged promptly, and verified fixes are deployed through the automated GitHub Actions pipeline.

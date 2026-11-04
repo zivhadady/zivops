@@ -4,41 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <meta name="author" content="{{ site.author }}">
+
     <title>{{ page.title | default: site.title }}</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/zivops.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
     <div class="background-grid"></div>
+
     <nav class="glass-nav">
         <div class="nav-brand">
             <div class="logo">
                 <i class="fas fa-terminal"></i> {{ site.title }}
             </div>
             <div class="system-status">
-                <span class="pulse"></span> System: 100% Uptime
+                <span class="pulse"></span> Status: All Systems Operational
             </div>
         </div>
         <div class="nav-links">
             <a href="#about">About</a>
             <a href="#skills">Tech Stack</a>
             <a href="#experience">Experience</a>
-            <a href="#projects">Projects & IaC</a>
+            <a href="#projects">Projects</a>
         </div>
     </nav>
-
 
     <main>
         {{ content }}
     </main>
 
     <footer>
-        <p>&copy; 2026 {{ site.author }} | {{ site.description }}</p>
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }} &bull; {{ site.description }}</p>
     </footer>
 </body>
 

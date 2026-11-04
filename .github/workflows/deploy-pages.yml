@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
   workflow_dispatch:
 
 permissions:
@@ -29,7 +28,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -40,7 +39,7 @@ jobs:
           source: ./
           destination: ./_site
 
-      - name: Validate Links & HTML Syntax
+      - name: Validate Links & HTML Integrity
         run: python validate_links.py ./_site
 
       - name: Upload artifact
