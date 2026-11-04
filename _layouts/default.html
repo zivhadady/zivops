@@ -11,7 +11,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/zivops.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -21,11 +21,11 @@
 
     <nav class="glass-nav">
         <div class="nav-brand">
-            <div class="logo">
+            <a href="#about" class="logo" style="text-decoration: none;">
                 <i class="fas fa-terminal"></i> {{ site.title }}
-            </div>
+            </a>
             <div class="system-status">
-                <span class="pulse"></span> Status: All Systems Operational
+                <span class="pulse"></span> System Operational
             </div>
         </div>
         <div class="nav-links">
@@ -33,6 +33,10 @@
             <a href="#skills">Tech Stack</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+            <a href="https://github.com/zivhadady" target="_blank" rel="noopener noreferrer" class="nav-cta">
+                <i class="fab fa-github"></i> GitHub
+            </a>
         </div>
     </nav>
 
@@ -41,7 +45,7 @@
     </main>
 
     <footer>
-        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }} &bull; {{ site.description }}</p>
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }} &bull; DevOps & Infrastructure Engineer</p>
     </footer>
 </body>
 
