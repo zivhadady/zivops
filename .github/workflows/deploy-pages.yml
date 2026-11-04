@@ -31,13 +31,19 @@ jobs:
           python-version: '3.12'
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
 
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          source: ./
-          destination: ./_site
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" --destination ./_site
+        env:
+          JEKYLL_ENV: production
 
       - name: Validate Links & HTML Integrity
         run: python validate_links.py ./_site
