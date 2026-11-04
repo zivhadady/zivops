@@ -4,15 +4,15 @@ Personal portfolio and technical showcase maintained by **[Ziv Hadady](https://g
 
 **Live Site:** [zivhadady.github.io/zivops](https://zivhadady.github.io/zivops/)  
 **LinkedIn:** [linkedin.com/in/ziv-hadady-794aaa19a](https://www.linkedin.com/in/ziv-hadady-794aaa19a/)  
-**Email:** [zhadady@gmail.com](mailto:zhadady@gmail.com) &bull; **Phone:** 050-290-3338
+**Email:** [zhadady@gmail.com](mailto:zhadady@gmail.com)
 
 ---
 
 ## Overview
 
-This repository houses the source code and automation for the **ZivOps** portfolio, designed with a high-tech telemetry HUD interface and automated CI/CD:
+This repository houses the source code and automation for the **ZivOps** portfolio, designed with a modern high-tech interface and automated CI/CD:
 
-- **Frontend**: Jekyll-based static site with responsive futuristic telemetry dashboard, tech stats, and interactive simulated terminal.
+- **Frontend**: Jekyll-based static site with responsive dark theme, technical skills breakdown, and interactive simulated terminal.
 - **CI/CD Pipeline**: GitHub Actions workflows using `ruby/setup-ruby` for modern Jekyll build and zero-downtime deployment to GitHub Pages.
 - **Site Integrity Gate**: Custom Python gate (`validate_links.py`) running in CI to enforce valid HTML tag balance and verify internal asset links before publishing.
 
