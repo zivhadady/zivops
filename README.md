@@ -1,6 +1,6 @@
 # ZivOps
 
-Personal portfolio, infrastructure automation, and GitOps showcase maintained by [Ziv Hadady](https://github.com/zivhadady).
+Personal portfolio, infrastructure automation
 
 Live site: [zivhadady.github.io/zivops](https://zivhadady.github.io/zivops/)
 
